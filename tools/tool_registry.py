@@ -128,7 +128,15 @@ class ToolRegistry:
         for module_info in pkgutil.walk_packages(package_paths, f"{package.__name__}."):
             if module_info.name.endswith(".base_tool") or module_info.name.endswith(".tool_registry"):
                 continue
-            module = importlib.import_module(module_info.name)
+            try:
+                module = importlib.import_module(module_info.name)
+            except Exception as exc:  # noqa: BLE001 — one bad optional dep must not hide Muse2/film tools
+                import logging
+
+                logging.getLogger(__name__).warning(
+                    "skip tool module %s: %s", module_info.name, exc
+                )
+                continue
             discovered.extend(self.register_module(module))
 
         self._discovered_packages.add(package_name)

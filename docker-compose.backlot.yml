@@ -1,0 +1,23 @@
+services:
+  openmontage-backlot:
+    build:
+      context: .
+      dockerfile: Dockerfile.backlot
+    image: openmontage-backlot:latest
+    container_name: openmontage-backlot
+    restart: unless-stopped
+    environment:
+      BACKLOT_HOST: "0.0.0.0"
+      BACKLOT_PORT: "4750"
+      BACKLOT_PUBLIC: "1"
+      OPENMONTAGE_ROOT: /app
+    ports:
+      # Bind host loopback only — nginx TLS + Basic Auth publishes :8463
+      - "127.0.0.1:4750:4750"
+    volumes:
+      - ./projects:/app/projects
+      - ./pipeline_defs:/app/pipeline_defs:ro
+      - ./packs:/app/packs:ro
+      - ./schemas:/app/schemas:ro
+      - ./lib:/app/lib:ro
+      - ./backlot:/app/backlot:ro

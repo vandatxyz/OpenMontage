@@ -1,0 +1,7 @@
+# Minimal deps to run Backlot UI in Docker (no full video toolchain).
+fastapi>=0.110
+uvicorn>=0.29
+watchfiles>=0.21
+pyyaml>=6.0
+Pillow>=10.0
+python-dotenv>=1.0

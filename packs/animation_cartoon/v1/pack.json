@@ -1,0 +1,11 @@
+{
+  "id": "animation_cartoon",
+  "version": "v1",
+  "label": "Short-form cartoon animation",
+  "compatibility": ["mianmian_kiro", "rabbit_fox_pilot"],
+  "defaults": {"aspect": "16:9", "duration": 5, "forceCloser": true, "maxClips": 60},
+  "cast_policy": {"seedDefaultDuo": false, "requireExplicitCast": true},
+  "qa_profile": {"pass_min_total": 8, "review_min_total": 6, "require_critical_axes_full": false,
+    "critical_axes": ["beat", "trash"],
+    "hard_fail_issues": ["reference_sheet", "wrong_dar", "blood_gore"]}
+}

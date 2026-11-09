@@ -1,0 +1,11 @@
+{
+  "id": "doc_observational",
+  "version": "v1",
+  "label": "Observational documentary",
+  "compatibility": ["zahna"],
+  "defaults": {"aspect": "16:9", "duration": 5, "forceCloser": false, "maxClips": 120},
+  "cast_policy": {"seedDefaultDuo": false, "requireExplicitCast": true},
+  "qa_profile": {"pass_min_total": 9, "review_min_total": 7, "require_critical_axes_full": true,
+    "critical_axes": ["beat", "cast", "realism", "trash"],
+    "hard_fail_issues": ["reference_sheet", "contact_sheet", "wrong_dar", "cartoon_look", "extra_person", "teleport_prop", "missing_main_action"]}
+}

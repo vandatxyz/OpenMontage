@@ -79,10 +79,15 @@ def cmd_open(project_id: str | None) -> int:
     return 0
 
 
+def _host() -> str:
+    # Default loopback. Set BACKLOT_HOST=0.0.0.0 for Docker / reverse-proxy.
+    return (os.environ.get("BACKLOT_HOST") or "127.0.0.1").strip() or "127.0.0.1"
+
+
 def cmd_serve(port: int) -> int:
     import uvicorn
 
-    uvicorn.run("backlot.server:app", host="127.0.0.1", port=port, log_level="warning")
+    uvicorn.run("backlot.server:app", host=_host(), port=port, log_level="warning")
     return 0
 
 

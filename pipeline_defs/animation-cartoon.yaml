@@ -1,0 +1,48 @@
+name: animation-cartoon
+version: "1.0"
+description: >
+  Short-form cartoon animation via Muse2. Pack animation_cartoon + project cast overlay.
+  Same film-factory gates (first-frame roles, aspect, PASS-only) to avoid sheet flashes.
+category: animation
+stability: experimental
+default_checkpoint_policy: guided
+
+film_factory:
+  category_id: animation_cartoon
+  pack_version: v1
+  project_id: mianmian_kiro
+  preferred_video_tool: muse2_video
+  allowed_video_providers: [muse2]
+  aspect: "9:16"
+  duration: 5
+  assemble_policy: pass_only
+
+required_skills:
+  - pipelines/animation-cartoon/executive-producer
+  - meta/checkpoint-protocol
+
+stages:
+  - name: script
+    skill: pipelines/animation-cartoon/executive-producer
+    produces: [script]
+    checkpoint_required: true
+    human_approval_default: true
+  - name: scene_plan
+    skill: pipelines/animation-cartoon/executive-producer
+    required_artifacts_in: [script]
+    produces: [scene_plan]
+    checkpoint_required: true
+    human_approval_default: true
+  - name: generate
+    skill: pipelines/animation-cartoon/executive-producer
+    required_artifacts_in: [scene_plan]
+    produces: [takes]
+    tools_available: [muse2_video, frame_integrity_scan, visual_qa_film]
+    checkpoint_required: true
+  - name: compose
+    skill: pipelines/animation-cartoon/executive-producer
+    required_artifacts_in: [takes]
+    produces: [final_video]
+    tools_available: [pass_only_assemble, video_compose, video_stitch]
+    checkpoint_required: true
+    human_approval_default: true

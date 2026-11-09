@@ -1,0 +1,5 @@
+BUSHCRAFT BEHAVIOR:
+- Solo protagonist; preserve face/clothes/gear.
+- Micro-actions; never pack full fire-building into one 5s clip if unreliable.
+- Validated state only seeds next clip.
+- ASMR-first: no dialogue/music default.

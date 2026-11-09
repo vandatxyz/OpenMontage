@@ -116,3 +116,9 @@ pytest-of-*/
 
 # GFPGAN/facexlib download face-detection weights to ./gfpgan/weights at runtime
 gfpgan/
+
+# render/build artifacts (không commit — nặng hàng GB)
+studio_ff/
+videos/
+packs/*/renders/
+*.log

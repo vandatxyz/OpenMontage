@@ -1,0 +1,60 @@
+name: doc-observational
+version: "1.0"
+description: >
+  Photoreal observational documentary (e.g. Zahna lifestyle) via Muse2.
+  Pack doc_observational + project overlay. Pin muse2_video. Film-factory gates on.
+category: documentary
+stability: experimental
+default_checkpoint_policy: guided
+
+reference_input:
+  supported: true
+
+orchestration:
+  mode: executive-producer
+  skill: pipelines/doc-observational/executive-producer
+  budget_default_usd: 0
+  max_revisions_per_stage: 3
+  max_send_backs: 2
+  max_wall_time_minutes: 240
+
+film_factory:
+  category_id: doc_observational
+  pack_version: v1
+  project_id: zahna
+  preferred_video_tool: muse2_video
+  allowed_video_providers: [muse2]
+  aspect: "16:9"
+  duration: 5
+  require_state_ledger: false
+  assemble_policy: pass_only
+
+required_skills:
+  - pipelines/doc-observational/executive-producer
+  - meta/checkpoint-protocol
+
+stages:
+  - name: script
+    skill: pipelines/doc-observational/executive-producer
+    produces: [script]
+    checkpoint_required: true
+    human_approval_default: true
+  - name: scene_plan
+    skill: pipelines/doc-observational/executive-producer
+    required_artifacts_in: [script]
+    produces: [scene_plan]
+    checkpoint_required: true
+    human_approval_default: true
+  - name: generate
+    skill: pipelines/doc-observational/executive-producer
+    required_artifacts_in: [scene_plan]
+    produces: [takes]
+    tools_available: [muse2_video, frame_integrity_scan, visual_qa_film]
+    checkpoint_required: true
+  - name: compose
+    skill: pipelines/doc-observational/executive-producer
+    required_artifacts_in: [takes]
+    produces: [final_video]
+    tools_available: [pass_only_assemble, video_compose, video_stitch]
+    checkpoint_required: true
+    human_approval_default: true

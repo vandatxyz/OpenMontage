@@ -314,8 +314,16 @@ def create_app() -> FastAPI:
         return response
 
     # Loopback binding alone does not prevent browser DNS-rebinding requests.
+    # Docker / public reverse-proxy: set BACKLOT_PUBLIC=1 or BACKLOT_ALLOWED_HOSTS.
+    allowed = ["127.0.0.1", "localhost"]
+    if (_os.environ.get("BACKLOT_PUBLIC") or "").strip() in ("1", "true", "yes"):
+        allowed = ["*"]
+    else:
+        extra = (_os.environ.get("BACKLOT_ALLOWED_HOSTS") or "").strip()
+        if extra:
+            allowed = [h.strip() for h in extra.split(",") if h.strip()] or allowed
     app.add_middleware(
-        TrustedHostMiddleware, allowed_hosts=["127.0.0.1", "localhost"], www_redirect=False,
+        TrustedHostMiddleware, allowed_hosts=allowed, www_redirect=False,
     )
     return app
 

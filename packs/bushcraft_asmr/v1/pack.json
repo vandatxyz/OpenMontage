@@ -1,0 +1,11 @@
+{
+  "id": "bushcraft_asmr",
+  "version": "v1",
+  "label": "Solo bushcraft ASMR realism",
+  "compatibility": ["solo_survival"],
+  "defaults": {"aspect": "16:9", "duration": 5, "forceCloser": false, "maxClips": 60, "asmr": true},
+  "cast_policy": {"seedDefaultDuo": false, "requireExplicitCast": true, "maxNamedCast": 1},
+  "qa_profile": {"pass_min_total": 9, "review_min_total": 7, "require_critical_axes_full": true,
+    "critical_axes": ["beat", "cast", "realism", "trash"],
+    "hard_fail_issues": ["reference_sheet", "wrong_dar", "extra_person", "teleport_prop", "missing_main_action", "cartoon_look"]}
+}

@@ -1,0 +1,2 @@
+Bushcraft realism QA. Hard-fail: sheet in frame, second person, teleport tools, wrong DAR, cartoon look, missing main survival action.
+Score beat/cast/continuity/realism/trash. Prefer REVIEW over false PASS when action incomplete. Return JSON.

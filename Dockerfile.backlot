@@ -1,0 +1,31 @@
+FROM python:3.11-slim-bookworm
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    PYTHONUNBUFFERED=1 \
+    BACKLOT_HOST=0.0.0.0 \
+    BACKLOT_PORT=4750 \
+    BACKLOT_PUBLIC=1 \
+    OPENMONTAGE_ROOT=/app
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ffmpeg \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements-backlot.txt .
+RUN pip install --no-cache-dir -r requirements-backlot.txt
+
+# App code needed by Backlot (read-only board over projects/)
+COPY backlot/ ./backlot/
+COPY lib/ ./lib/
+COPY pipeline_defs/ ./pipeline_defs/
+COPY packs/ ./packs/
+COPY schemas/ ./schemas/
+
+RUN mkdir -p /app/projects
+
+EXPOSE 4750
+
+CMD ["python", "-m", "backlot", "serve", "--port", "4750"]

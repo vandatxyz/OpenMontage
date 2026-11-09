@@ -1,0 +1,3 @@
+Photoreal documentary QA. Fail: cartoon look, animal cast not scripted, looking at camera, blood, text/logos, slapstick, reference sheets in frame.
+Score beat/cast/continuity/realism/trash 0-2. For continue=false use typed continuity (angle/scene/time) — do not auto-give continuity=2 without checking state consistency when required.
+Return JSON: pass,total,scores,issues,feedback.

@@ -1,0 +1,1 @@
+Audio QA for bushcraft ASMR: require natural ambient/foley presence; flag missing track, clipping loudness, or obvious music bed unless scripted.

@@ -1,0 +1,96 @@
+name: bushcraft-asmr
+version: "1.0"
+description: >
+  Photoreal solo bushcraft / survival ASMR via Muse2. Category pack bushcraft_asmr
+  + project overlay solo_survival. Pins muse2_video. Applies film-factory gates:
+  first-frame roles, aspect DAR, take storage, PASS-only assemble.
+category: bushcraft
+stability: experimental
+default_checkpoint_policy: guided
+
+reference_input:
+  supported: true
+
+orchestration:
+  mode: executive-producer
+  skill: pipelines/bushcraft-asmr/executive-producer
+  budget_default_usd: 0
+  max_revisions_per_stage: 3
+  max_send_backs: 2
+  max_wall_time_minutes: 180
+
+extensions:
+  custom_scripts: true
+  custom_playbooks: true
+  custom_skills: true
+  custom_tools: true
+
+required_skills:
+  - pipelines/bushcraft-asmr/executive-producer
+  - meta/checkpoint-protocol
+
+film_factory:
+  category_id: bushcraft_asmr
+  pack_version: v1
+  project_id: solo_survival
+  preferred_video_tool: muse2_video
+  allowed_video_providers: [muse2]
+  aspect: "16:9"
+  duration: 5
+  require_state_ledger: true
+  assemble_policy: pass_only
+
+stages:
+  - name: script
+    skill: pipelines/bushcraft-asmr/executive-producer
+    produces: [script]
+    tools_available: []
+    checkpoint_required: true
+    human_approval_default: true
+    review_focus:
+      - Solo protagonist only
+      - Survival goal and micro-actions clear
+      - State dependencies listed (fire/water/shelter/food)
+
+  - name: scene_plan
+    skill: pipelines/bushcraft-asmr/executive-producer
+    required_artifacts_in: [script]
+    produces: [scene_plan]
+    tools_available: []
+    checkpoint_required: true
+    human_approval_default: true
+    review_focus:
+      - One action per beat
+      - start/end states present
+      - Mode A/B/C continuity typed
+
+  - name: assets
+    skill: pipelines/bushcraft-asmr/executive-producer
+    required_artifacts_in: [scene_plan]
+    produces: [asset_manifest]
+    tools_available: []
+    checkpoint_required: true
+    human_approval_default: false
+
+  - name: generate
+    skill: pipelines/bushcraft-asmr/executive-producer
+    required_artifacts_in: [scene_plan, asset_manifest]
+    produces: [takes]
+    tools_available: [muse2_video, frame_integrity_scan, visual_qa_film, audio_qa_asmr]
+    checkpoint_required: true
+    human_approval_default: false
+    review_focus:
+      - Image 1 is first_frame never sheet
+      - DAR matches 16:9
+      - FAIL not selected
+
+  - name: compose
+    skill: pipelines/bushcraft-asmr/executive-producer
+    required_artifacts_in: [takes]
+    produces: [final_video]
+    tools_available: [pass_only_assemble, video_compose, video_stitch]
+    checkpoint_required: true
+    human_approval_default: true
+    review_focus:
+      - Only PASS (or approved REVIEW) clips
+      - Audio QA considered for ASMR
